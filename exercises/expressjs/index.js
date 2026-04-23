@@ -26,4 +26,3 @@ app.use((request, response, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-

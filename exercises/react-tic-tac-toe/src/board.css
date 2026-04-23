@@ -1,0 +1,17 @@
+.square {
+	font-weight: bold;
+
+	min-height: 40px;
+	min-width: 40px;
+
+	border: solid 1px gray;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.row {
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.board {}
