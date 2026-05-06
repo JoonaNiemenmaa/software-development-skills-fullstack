@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
 	name: { type: String, required: true, unique: true },
-	passphrase: { type: String, required: true },
+	passphraseHash: { type: String, required: true },
 })
 
 const User = model("User", userSchema);

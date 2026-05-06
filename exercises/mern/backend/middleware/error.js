@@ -1,3 +1,9 @@
+export const raiseError = (statusCode, message) => {
+	let error = new Error(message);
+	error.statusCode = statusCode;
+	throw error;
+}
+
 export const errorHandler = (error, request, response, next) => {
 	const statusCode = error.statusCode || 500;
 

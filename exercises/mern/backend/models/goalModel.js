@@ -1,12 +1,13 @@
 import { Types, Schema, model } from "mongoose";
 
+const options = {
+	timestamps: true
+};
+
 const goalSchema = new Schema({
-	owner: { type: Types.ObjectId, required: true },
+	owner: { type: Types.ObjectId, required: true, ref: "User" },
 	text: { type: String, required: true },
-},
-	{
-		timestamps: true
-	});
+}, options);
 
 const Goal = model("Goal", goalSchema);
 

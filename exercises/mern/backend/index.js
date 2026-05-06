@@ -16,7 +16,7 @@ app.use("/api/auth", auth);
 
 app.use(errorHandler);
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017")
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/testdb")
 	.then(connection => console.log(`Connected to database on ${connection.connection.host}`))
 	.catch(error => {
 		console.error(error);

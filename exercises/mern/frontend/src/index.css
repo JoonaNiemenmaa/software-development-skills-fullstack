@@ -1,0 +1,12 @@
+.navbar-content {
+	background: grey;
+
+	margin: 0 0;
+	padding: 4px 24px;
+}
+
+.navbar-content * {
+	padding-right: 30px;
+	display: inline-block;
+
+}
