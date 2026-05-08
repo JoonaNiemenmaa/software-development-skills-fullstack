@@ -1,5 +1,9 @@
+body {
+	font: sans-serif;
+}
+
 .navbar-content {
-	background: grey;
+	border-bottom: solid LightGrey 2px;
 
 	margin: 0 0;
 	padding: 4px 24px;
@@ -8,5 +12,9 @@
 .navbar-content * {
 	padding-right: 30px;
 	display: inline-block;
+}
 
+li * {
+	display: inline;
+	margin-right: 12px;
 }

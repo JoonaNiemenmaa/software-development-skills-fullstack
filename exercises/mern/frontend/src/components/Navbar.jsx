@@ -1,6 +1,15 @@
+import { useContext } from "react";
 import { NavLink } from "react-router";
 
-const Navbar = () => {
+import AuthContext from "../AuthContext";
+
+const Header = ({ setToken }) => {
+	const token = useContext(AuthContext);
+
+	const handleLogout = () => {
+		setToken(null);
+	};
+
 	return (
 		<nav>
 			<div className="navbar-content">
@@ -8,9 +17,10 @@ const Navbar = () => {
 				<NavLink to="/" >Dashboard</NavLink>
 				<NavLink to="/login" >Login</NavLink>
 				<NavLink to="/register" >Register</NavLink>
+				{(token) ? <button onClick={handleLogout} >Logout</button> : null}
 			</div>
 		</nav>
 	);
 }
 
-export default Navbar;
+export default Header;
