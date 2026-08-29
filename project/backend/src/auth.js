@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import User from "./User.js";
+import User from "./models/User.js";
 
 const saltRounds = 10;
 

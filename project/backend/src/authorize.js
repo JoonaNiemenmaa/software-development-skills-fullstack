@@ -20,7 +20,7 @@ const authorize = (request, response, next) => {
 	const token = authorization[1];
 
 	try {
-		const payload = jwt.verify(token, process.env.SECRET || peanuts);
+		const payload = jwt.verify(token, process.env.SECRET || "peanuts");
 		request.user = payload;
 		next();
 	} catch (error) {
