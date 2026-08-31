@@ -8,7 +8,7 @@ import handleError from "./src/error.js";
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/testdb";
 
-mongoose.connect(MONGO_URI).catch(error => console.err(error));
+mongoose.connect(MONGO_URI).catch(error => console.error(error));
 
 const app = express();
 
