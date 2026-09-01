@@ -1,19 +1,42 @@
 import { useNavigate } from "react-router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import AuthContext from "../AuthContext";
+import config from "../config";
+import Card from "../components/Card";
 
 const Index = () => {
 
   const navigate = useNavigate();
   const token = useContext(AuthContext);
+  const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    if (!token) navigate("/login");
-  }, [navigate, token])
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const fetchWorkouts = async () => {
+      const url = `${config.base_url}/api/workout`
+      const response = await fetch(url, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      const json = await response.json()
+      setWorkouts(json);
+    };
+
+    fetchWorkouts();
+  }, [token, navigate])
 
   return (
-    <h1>HIANO SIVU</h1>
+    <>
+      <div>
+        {workouts.map((workout, index) => <Card key={index} workout={workout} />)}
+      </div>
+    </>
   );
 }
 

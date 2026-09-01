@@ -19,6 +19,8 @@ const authorize = (request, response, next) => {
 
 	const token = authorization[1];
 
+  console.log(token);
+
 	try {
 		const payload = jwt.verify(token, process.env.SECRET || "peanuts");
 		request.user = payload;

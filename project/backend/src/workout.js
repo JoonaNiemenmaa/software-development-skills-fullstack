@@ -19,11 +19,11 @@ workout.post("/", authorize, async (request, response) => {
 
   await workout.save()
 
-  response.send(workout);
+  return response.send(workout);
 })
 
 workout.get("/", authorize, async (request, response) => {
-  return await Workout.find({ trainee: request.user.userId })
+  response.send(await Workout.find({ trainee: request.user.userId }))
 })
 
 export default workout;
