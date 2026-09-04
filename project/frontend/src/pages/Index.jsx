@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useContext, useEffect, useState } from "react";
 
 import AuthContext from "../AuthContext";
@@ -33,6 +33,9 @@ const Index = () => {
 
   return (
     <>
+      <div>
+        <Link to="/create">Start workout</Link>
+      </div>
       <div>
         {workouts.map((workout, index) => <Card key={index} workout={workout} />)}
       </div>
