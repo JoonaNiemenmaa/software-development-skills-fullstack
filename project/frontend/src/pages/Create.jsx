@@ -76,6 +76,15 @@ const Create = () => {
                             <td>{set.exercise}</td>
                             <td>{set.reps}</td>
                             <td>{`${set.rest}s`}</td>
+                            <td>
+                                <button
+                                    onClick={() => {
+                                        setSets(sets.filter((s) => s !== set));
+                                    }}
+                                >
+                                    -
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
