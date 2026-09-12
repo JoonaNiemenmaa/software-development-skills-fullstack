@@ -10,8 +10,7 @@ workout.post("/", authorize, async (request, response) => {
     console.log(request.body);
 
     if (!sets) {
-        response.status(400);
-        throw new Error("bad request");
+        return response.status(400).send({ message: "bad request" });
     }
 
     const workout = new Workout({
@@ -19,9 +18,12 @@ workout.post("/", authorize, async (request, response) => {
         sets: sets,
     });
 
-    await workout.save();
-
-    return response.send(workout);
+    try {
+        await workout.save();
+        return response.status(201).send(workout);
+    } catch (error) {
+        return response.status(400).send({ message: error.message });
+    }
 });
 
 workout.get("/", authorize, async (request, response) => {

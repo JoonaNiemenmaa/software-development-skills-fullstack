@@ -12,8 +12,7 @@ auth.post("/register", async (request, response) => {
     const { username, password } = request.body;
 
     if (!username || !password) {
-        response.status(400);
-        throw new Error("bad request");
+        return response.status(400).send({ message: "bad request" });
     }
 
     const hash = await bcrypt.hash(password, saltRounds);
@@ -24,19 +23,21 @@ auth.post("/register", async (request, response) => {
         exercises: ["Pushup", "Pullup", "Squat", "Leg Raise", "Dip", "Lunge"],
     });
 
-    await newUser.save();
-
-    response.status(201).json({
-        message: "user registered successfully",
-    });
+    try {
+        await workout.save();
+        return response.status(201).json({
+            message: "user registered successfully",
+        });
+    } catch (error) {
+        return response.status(400).send({ message: error.message });
+    }
 });
 
 auth.post("/login", async (request, response) => {
     const { username, password } = request.body;
 
     if (!username || !password) {
-        response.status(400);
-        throw new Error("bad request");
+        return response.status(400).send({ message: "bad request" });
     }
 
     const user = await User.findOne({
@@ -44,13 +45,11 @@ auth.post("/login", async (request, response) => {
     });
 
     if (!user) {
-        response.status(404);
-        throw new Error("user not found");
+        return response.status(404).send({ message: "user not found" });
     }
 
     if (!(await bcrypt.compare(password, user.passwordHash))) {
-        response.status(401);
-        throw new Error("Unauthorized");
+        return response.status(401).send({ message: "unauthorized" });
     }
 
     const token = jwt.sign(
