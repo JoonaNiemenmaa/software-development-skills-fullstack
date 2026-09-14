@@ -1,11 +1,8 @@
 import { useState } from "react";
 import config from "../config";
-import { useContext } from "react";
-import AuthContext from "../AuthContext";
 import { useNavigate } from "react-router";
 
 const Create = () => {
-    const token = useContext(AuthContext);
     const [sets, setSets] = useState([]);
     const navigate = useNavigate();
 
