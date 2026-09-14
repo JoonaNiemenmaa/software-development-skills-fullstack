@@ -1,53 +1,51 @@
 import { useNavigate } from "react-router";
 import config from "../config";
 
-const Login = ({ setToken }) => {
+const Login = ({ setUser }) => {
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const onLogin = async (formData) => {
+        const username = formData.get("username");
+        const password = formData.get("password");
 
-  const onLogin = async (formData) => {
+        if (!username || !password) return;
 
-    const username = formData.get("username")
-    const password = formData.get("password")
+        const url = `${config.base_url}/api/auth/login`;
 
-    if (!username || !password) return;
+        const opts = {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+        };
 
-    const url = `${config.base_url}/api/auth/login`
+        const response = await fetch(url, opts);
 
-    const opts = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      })
-    }
+        if (!response.ok) return;
 
-    const response = await fetch(url, opts)
+        const user = await response.json();
 
-    if (!response.ok) return;
+        setUser(user);
 
-    const json = await response.json();
+        navigate("/");
+    };
 
-    setToken(json.token);
+    return (
+        <form action={onLogin}>
+            <label htmlFor="username">Username</label>
+            <input name="username" type="text"></input>
 
-    navigate("/");
+            <label htmlFor="username">Password</label>
+            <input name="password" type="password"></input>
 
-  }
-
-  return (
-    <form action={ onLogin }>
-      <label htmlFor="username">Username</label>
-      <input name="username" type="text"></input>
-
-      <label htmlFor="username">Password</label>
-      <input name="password" type="password"></input>
-
-      <button>Login</button>
-    </form>
-  )
-}
+            <button>Login</button>
+        </form>
+    );
+};
 
 export default Login;

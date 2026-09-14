@@ -1,21 +1,42 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import AuthContext from "../AuthContext";
+import config from "../config";
 
-const CheckToken = () => {
-  const navigate = useNavigate();
-  const token = useContext(AuthContext);
+const CheckLogin = ({ setUser }) => {
+    const navigate = useNavigate();
+    const user = useContext(AuthContext);
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-  }, [navigate, token])
+    useEffect(() => {
+        if (user) return;
 
-  return (
-    <Outlet />
-  );
-}
+        const fetchUser = async () => {
+            try {
+                const url = `${config.base_url}/api/auth/user`;
 
-export default CheckToken;
+                const response = await fetch(url, {
+                    credentials: "include",
+                });
+
+                if (!response.ok) return null;
+
+                const user = response.json();
+
+                setUser(user);
+
+                return user;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        };
+        fetchUser().then((user) => {
+            console.log(user);
+            if (!user) navigate("/login");
+        });
+    }, [navigate, user]);
+
+    return <Outlet />;
+};
+
+export default CheckLogin;

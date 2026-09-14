@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const authorize = (request, response, next) => {
-    let authorization = request.headers.authorization;
+    /*let authorization = request.headers.authorization;
 
     if (!authorization) {
         return response
@@ -19,7 +19,12 @@ const authorize = (request, response, next) => {
             .send({ message: "Bearer authorization schema was not used" });
     }
 
-    const token = authorization[1];
+    const token = authorization[1];*/
+
+    const token = request.cookies.token;
+
+    if (!token)
+        return response.status(404).json({ message: "no token cookie" });
 
     console.log(token);
 

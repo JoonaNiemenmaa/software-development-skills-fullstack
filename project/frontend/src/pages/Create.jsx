@@ -34,8 +34,8 @@ const Create = () => {
 
         const response = await fetch(`${config.base_url}/api/workout`, {
             method: "POST",
+            credentials: "include",
             headers: {
-                authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(sets),

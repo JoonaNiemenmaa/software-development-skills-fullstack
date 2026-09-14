@@ -1,5 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import auth from "./src/auth.js";
 import workout from "./src/workout.js";
@@ -15,6 +17,14 @@ const app = express();
 
 app.use(express.urlencoded());
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(
+    cors({
+        origin: "http://localhost:8000",
+        credentials: true,
+    }),
+);
 
 app.use("/api/auth", auth);
 app.use("/api/workout", workout);

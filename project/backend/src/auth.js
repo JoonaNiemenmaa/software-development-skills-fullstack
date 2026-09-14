@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import User from "./models/User.js";
+import authorize from "./authorize.js";
 
 const saltRounds = 10;
 
@@ -52,14 +53,31 @@ auth.post("/login", async (request, response) => {
         return response.status(401).send({ message: "unauthorized" });
     }
 
-    const token = jwt.sign(
-        { userId: user._id, username: user.username },
-        process.env.SECRET || "peanuts",
-    );
+    const payload = { userId: user._id, username: user.username };
 
-    response.status(201).json({
-        token: token,
+    const token = jwt.sign(payload, process.env.SECRET || "peanuts");
+
+    response.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
     });
+
+    response.status(201).json(payload);
+});
+
+auth.get("/user", authorize, (request, response) => {
+    return response.status(200).json(request.user);
+});
+
+auth.post("/logout", authorize, (request, response) => {
+    response.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+    });
+
+    return response.status(200).json({ message: "logged out successfully" });
 });
 
 export default auth;

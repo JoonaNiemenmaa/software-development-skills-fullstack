@@ -7,22 +7,22 @@ import Register from "./pages/Register";
 import AuthContext from "./AuthContext";
 import NavBar from "./components/NavBar";
 import Create from "./pages/Create";
-import CheckToken from "./components/CheckToken";
+import CheckLogin from "./components/CheckToken";
 
 const App = () => {
-    const [token, setToken] = useState(null);
+    const [user, setUser] = useState(null);
 
     return (
         <BrowserRouter>
-            <AuthContext value={token}>
-                <NavBar setToken={setToken} />
+            <AuthContext value={user}>
+                <NavBar setUser={setUser} />
                 <Routes>
                     <Route
                         path="/login"
-                        element={<Login setToken={setToken} />}
+                        element={<Login setUser={setUser} />}
                     />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<CheckToken />}>
+                    <Route path="/" element={<CheckLogin setUser={setUser} />}>
                         <Route index element={<Index />} />
                         <Route path="create" element={<Create />} />
                     </Route>

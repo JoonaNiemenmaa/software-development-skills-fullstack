@@ -6,41 +6,41 @@ import config from "../config";
 import Card from "../components/Card";
 
 const Index = () => {
+    const navigate = useNavigate();
+    const user = useContext(AuthContext);
+    const [workouts, setWorkouts] = useState([]);
 
-  const navigate = useNavigate();
-  const token = useContext(AuthContext);
-  const [workouts, setWorkouts] = useState([]);
+    useEffect(() => {
+        if (!user) return;
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+        const fetchWorkouts = async () => {
+            const url = `${config.base_url}/api/workout`;
+            try {
+                const response = await fetch(url, {
+                    credentials: "include",
+                });
+                const json = await response.json();
+                setWorkouts(json);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-    const fetchWorkouts = async () => {
-      const url = `${config.base_url}/api/workout`
-      const response = await fetch(url, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
-      const json = await response.json()
-      setWorkouts(json);
-    };
+        fetchWorkouts();
+    }, [user, navigate]);
 
-    fetchWorkouts();
-  }, [token, navigate])
-
-  return (
-    <>
-      <div>
-        <Link to="/create">Start workout</Link>
-      </div>
-      <div>
-        {workouts.map((workout, index) => <Card key={index} workout={workout} />)}
-      </div>
-    </>
-  );
-}
+    return (
+        <>
+            <div>
+                <Link to="/create">Start workout</Link>
+            </div>
+            <div>
+                {workouts.map((workout, index) => (
+                    <Card key={index} workout={workout} />
+                ))}
+            </div>
+        </>
+    );
+};
 
 export default Index;
