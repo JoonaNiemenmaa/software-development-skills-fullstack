@@ -7,11 +7,8 @@ const workout = Router();
 workout.post("/", authorize, async (request, response) => {
     const sets = request.body;
 
-    console.log(request.body);
-
-    if (!sets) {
-        return response.status(400).send({ message: "bad request" });
-    }
+    console.log(sets);
+    console.log(!sets);
 
     const workout = new Workout({
         trainee: request.user.userId,
