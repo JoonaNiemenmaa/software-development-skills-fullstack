@@ -20,7 +20,7 @@ const CheckLogin = ({ setUser }) => {
 
                 if (!response.ok) return null;
 
-                const user = response.json();
+                const user = await response.json();
 
                 setUser(user);
 

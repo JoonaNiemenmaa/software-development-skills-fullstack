@@ -53,7 +53,11 @@ auth.post("/login", async (request, response) => {
         return response.status(401).send({ message: "unauthorized" });
     }
 
-    const payload = { userId: user._id, username: user.username };
+    const payload = {
+        userId: user._id,
+        username: user.username,
+        exercises: user.exercises,
+    };
 
     const token = jwt.sign(payload, process.env.SECRET || "peanuts");
 

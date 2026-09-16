@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import config from "../config";
 import { useNavigate } from "react-router";
+import AuthContext from "../AuthContext";
 
 const Create = () => {
+    const user = useContext(AuthContext);
     const [sets, setSets] = useState([]);
     const navigate = useNavigate();
 
@@ -47,7 +49,18 @@ const Create = () => {
         <>
             <form action={addSet}>
                 <label htmlFor="exercise">Exercise</label>
-                <input name="exercise" type="text" />
+                {user.exercises.map((exercise, index) => (
+                    <>
+                        <input
+                            id={exercise}
+                            key={index}
+                            name="exercise"
+                            value={exercise}
+                            type="radio"
+                        />
+                        <label htmlFor={exercise}>{exercise}</label>
+                    </>
+                ))}
 
                 <label htmlFor="reps">Reps</label>
                 <input name="reps" type="number" />
