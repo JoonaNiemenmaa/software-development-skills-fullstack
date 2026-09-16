@@ -50,16 +50,15 @@ const Create = () => {
             <form action={addSet}>
                 <label htmlFor="exercise">Exercise</label>
                 {user.exercises.map((exercise, index) => (
-                    <>
+                    <div key={index}>
                         <input
                             id={exercise}
-                            key={index}
                             name="exercise"
                             value={exercise}
                             type="radio"
                         />
                         <label htmlFor={exercise}>{exercise}</label>
-                    </>
+                    </div>
                 ))}
 
                 <label htmlFor="reps">Reps</label>
